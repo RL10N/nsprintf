@@ -1,0 +1,61 @@
+# nsprintf: Easy Internationalized Message Pluralization #
+
+**nsprintf** provides a single function, `nsprintf()`, which makes it simple to construct internationalized message pluralizations.
+
+This is a common problem in writing pluralized R messages that are communicated to the end-user. For example, imagine that you have code that executes an operation one or more times and you wish to communicate the number of iterations to the end-user via `message()`, `warning()`, or `error()`. You can address that in a number of ways, one of which is simply ignoring pluralization entirely:
+
+```{r}
+n <- 2; message(paste0(n, " iterations occurred"))
+n <- 1; message(paste0(n, " iterations occurred"))
+```
+
+The grammatical failure is obnoxious. Another is to construct an if-else loop based on the value of `n`:
+
+```{r}
+n <- 2
+if (n == 1) {
+    message("One iteration occurred")
+} else {
+    message(paste0(n, " iterations occurred"))
+}
+```
+
+This, however, is not internationalized code. No matter what language the end-user operates in, they will receive messages in English. The code itself is also verbose. The solution offered by base R, is `ngettext()`, which internationalizes the code, allowing a package developer to [write translations using gettext](https://cran.r-project.org/doc/manuals/r-devel/R-admin.html#Internationalization). In this form, the code becomes:
+
+```{r}
+n <- 2
+sprintf(ngettext(n, "%d iteration occurred", "%d iterations occurred"), n)
+```
+
+If message translations are available, this code will invoke a gettext translation catalog to report a locally appropriate message translation. Unfortunately, the code is verbose and requires remembering two different function names. **nsprintf** implements this as a single function:
+
+```{r}
+library("nsprintf")
+n <- 2
+nsprintf(n, "%d iteration occurred", "%d iterations occurred")
+```
+
+
+## Package Installation ##
+
+[![CRAN Version](http://www.r-pkg.org/badges/version/nsprintf)](http://cran.r-project.org/package=nsprintf)
+![Downloads](http://cranlogs.r-pkg.org/badges/nsprintf)
+[![Travis-CI Build Status](https://travis-ci.org/RL10N/nsprintf.png?branch=master)](https://travis-ci.org/RL10N/nsprintf)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/0nr5r6fycm8jcxm0?svg=true)](https://ci.appveyor.com/project/RL10N/nsprintf)
+[![codecov.io](http://codecov.io/github/RL10N/nsprintf/coverage.svg?branch=master)](http://codecov.io/github/RL10N/nsprintf?branch=master)
+
+The package is available on [CRAN](http://cran.r-project.org/package=nsprintf) and can be installed directly in R using:
+
+```R
+install.packages("nsprintf")
+```
+
+The latest development version on GitHub can be installed using itself:
+
+```R
+if (!require("ghit")) {
+    install.packages("ghit")
+}
+ghit::install_github("RL10N/nsprintf")
+```
+
