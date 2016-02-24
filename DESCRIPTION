@@ -5,8 +5,11 @@ Version: 0.1.1
 Date: 2016-02-18
 Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
 Authors@R: c(person("Thomas J.", "Leeper", role = c("aut", "cre"), email = "thosjleeper@gmail.com"))
-Description: A single function to facilitate the correct pluralization and internationalization of R messages.
-Suggests: testthat
+Description: A single function to facilitate the correct pluralization and
+    internationalization of R messages.
+Suggests:
+    testthat
 License: MIT + file LICENSE
 URL: https://github.com/RL10N/nsprintf
 BugReports: https://github.com/RL10N/nsprintf/issues
+RoxygenNote: 5.0.1
